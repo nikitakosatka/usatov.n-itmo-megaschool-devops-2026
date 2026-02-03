@@ -1,5 +1,10 @@
 # usatov.n-itmo-megaschool-devops-2026
 
+- [Все файлы необходимые для работы с Ansible](ansible)
+- [Docker-compose файлы с дополнительными сервисами](ansible/roles/monitoring/docker-compose/docker-compose.yml) и их [конфиги](ansible/roles/monitoring/files)
+- JSON-файл дашборда Grafana: [1](ansible/roles/monitoring/grafana/dashboards/node-exporter.json) [2](ansible/roles/monitoring/grafana/dashboards/docker-cadvisor.json)
+- Файл с логами выполнения Ansible: [1](ansible-vvvv.log) и [2](ansible.log)
+
 # Развертывание инфраструктуры с использованием Ansible и Docker
 
 ## Try it out
