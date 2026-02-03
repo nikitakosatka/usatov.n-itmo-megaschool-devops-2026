@@ -1,0 +1,45 @@
+- name: Create monitoring directory
+  file:
+    path: /opt/monitoring
+    state: directory
+
+- name: Copy Grafana provisioning
+  copy:
+    src: grafana/
+    dest: /opt/monitoring/grafana/
+
+- name: Copy dashboards
+  copy:
+    src: grafana/dashboards/
+    dest: /opt/monitoring/grafana/dashboards/
+
+- name: Copy docker-compose
+  copy:
+    src: docker-compose/docker-compose.yml
+    dest: /opt/monitoring/docker-compose.yml
+
+- name: Deploy configs
+  copy:
+    src: "{{ item }}"
+    dest: "/opt/monitoring/{{ item | basename }}"
+  loop:
+    - prometheus.yml
+    - loki.yml
+
+- name: Deploy template configs
+  template:
+    src: "{{ item }}"
+    dest: "/opt/monitoring/{{ item | basename | regex_replace('.j2','') }}"
+  loop:
+    - promtail.yml.j2
+
+
+- name: Stop monitoring stack
+  command: docker compose down
+  args:
+    chdir: /opt/monitoring
+
+- name: Start monitoring stack
+  command: docker compose up -d
+  args:
+    chdir: /opt/monitoring

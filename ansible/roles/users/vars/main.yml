@@ -1,0 +1,11 @@
+admins_gid: 2001
+developers_gid: 2002
+
+users:
+  - name: developer1
+    group: developers
+    ssh_key: developer1.pub
+
+  - name: admin1
+    group: admins
+    ssh_key: admin1.pub

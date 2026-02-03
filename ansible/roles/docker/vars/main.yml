@@ -1,0 +1,22 @@
+docker_apt_packages:
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
+
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-compose-plugin
+
+docker_users:
+  - developer1
+  - admin1
+
+docker_registry_mirrors:
+  - "https://nexus.example.com:5000"
+
+docker_arch_map:
+  x86_64: amd64
+  aarch64: arm64

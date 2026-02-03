@@ -1,0 +1,42 @@
+- name: Add group Developers to remote server
+  group:
+    name: developers
+    gid: "{{ developers_gid }}"
+    state: present
+
+- name: Add group Admins to remote server
+  group:
+    name: admins
+    gid: "{{ admins_gid }}"
+    state: present
+
+- name: Allow admins group passwordless sudo
+  copy:
+    dest: /etc/sudoers.d/admins
+    content: |
+      %admins ALL=(ALL) NOPASSWD:ALL
+    owner: root
+    group: root
+    mode: '0440'
+
+- name: Ensure docker group exists
+  group:
+    name: docker
+    state: present
+
+- name: Create users
+  user:
+    name: "{{ item.name }}"
+    groups: "{{ item.group }},docker"
+    append: yes
+    shell: /bin/bash
+    create_home: yes
+    state: present
+  loop: "{{ users }}"
+
+- name: Add SSH keys for users
+  authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ lookup('file', 'files/ssh_keys/' + item.ssh_key) }}"
+  loop: "{{ users }}"

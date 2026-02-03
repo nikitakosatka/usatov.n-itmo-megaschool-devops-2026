@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: 'default'
+    orgId: 1
+    folder: 'Infra'
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards
+    editable: false
+    updateIntervalSeconds: 10
